@@ -1,7 +1,6 @@
 /* ---------start load------------------------------------------------------------------- */
 window.onload = function () {
     document.body.style.overflow = "hidden";
-    document.querySelector(".nav-bul").style.display = "none";
     let load = document.getElementById("load");
 
     setTimeout(() => {
@@ -110,29 +109,30 @@ bullet.forEach(span => {
                 handlActive(e);
         
                 // chose random background yes or no 
-                if (e.target.dataset.display === "hide") {
-                    document.querySelector(".nav-bul").style.display = "none";
-                }else{
+                if (e.target.dataset.display === "show") {
                     document.querySelector(".nav-bul").style.display = "block";
+                }else{
+                    document.querySelector(".nav-bul").style.display = "none";
                 }
-        
+                
                 // add in local storeg 
                 localStorage.setItem("show-display", e.target.dataset.display);
             });
 });
 // localstoreg show bullets
-let localShowBullet = localStorage.getItem("show-display")
+let localShowBullet = localStorage.getItem("show-display");
 
 if (localShowBullet !== null) {
 
     bullet.forEach(span => {
         span.classList.remove("active");
     });
-    console.log(localShowBullet);
-    if (localShowBullet === "show") {
+
+
+    if (localShowBullet == "show") {
         document.querySelector(".nav-bul").style.display = "block";
         document.querySelector(".bullet-optaion .yes").classList.add("active");
-    } else {
+    } else if (localShowBullet == "hide"){
         document.querySelector(".nav-bul").style.display = "none";
         document.querySelector(".bullet-optaion .no").classList.add("active");
     }
@@ -141,37 +141,9 @@ if (localShowBullet !== null) {
 // buttin rest 
 let restOption = document.querySelector(".rest-optaion .yes")
 restOption.addEventListener("click", (e)=>{
-    
-    // كودي بدون ليرود لصفحة-----------------
-    // color
-    document.documentElement.style.setProperty("--main-color", "#03A9F4");
-    colorList.forEach(li => {
-        li.classList.remove("active");
-    });
-    document.querySelector(".colors-list li:nth-child(4)").classList.add("active");
-    
-    // backRand
-    backRand.forEach(span => {
-        span.classList.remove("active");
-    });
-    document.querySelector(".random-back .yes").classList.add("active");
-    backgroundOptaion = true;
-    randomBack();
-    
-    // bullet
-    bullet.forEach(span => {
-        span.classList.remove("active");
-    });
-    document.querySelector(".bullet-optaion .yes").classList.add("active");
-    document.querySelector(".nav-bul").style.display = "block";
-
-    // color imge in about page 
-    document.querySelector(".about-us .imge-box img").style.filter = "hue-rotate(0deg)";
-
-    localStorage.clear();
     // كود الزيرو-----------------
-    // localStorage.clear();
-    // window.location.reload();
+    localStorage.clear();
+    window.location.reload();
     
 })
 
@@ -184,6 +156,7 @@ sett.addEventListener("click", e => {
 document.addEventListener("click", (e) => {
     if (e.target !== sett && e.target !== document.querySelector(".icon-s i")){
         sett.classList.remove("open");
+        document.querySelector(".icon-s i").classList.remove("fa-spin");
     }
 })
 
@@ -214,12 +187,8 @@ scrollToSomewhere(allLinks);
 let land = document.querySelector(".landing-page");
 
 // Array imges
-let arrayImg = ["7.jpg","8.jpg","11.jpg","12.jpg","13.jpg"];
-// let arrayImg = ["7.jpg"];
-
-// let randomNumber = Math.floor(Math.random() * arrayImg.length);
-            
-// land.style.backgroundImage = `url(img/${arrayImg[randomNumber]})`
+/* 2 3 5 8 7 9 12 13*/
+let arrayImg = ["2.jpg","3.jpg","5.jpg","7.jpg","8.jpg","9.jpg","12.jpg","13.jpg"];
 
 function randomBack() {
     if (backgroundOptaion === true) {
@@ -273,34 +242,20 @@ window.onscroll = function () {
 
     // window scroll Top 
     let windowScoll = this.pageYOffset;
-    
 
-    //// كودي
-    setTimeout(() => {
-    
-        if (windowScoll >= 647) {
+    if (windowScoll > (posation + hightSkils - windowHeight) - 100)  {
             let progSkil = document.querySelectorAll(".skils .skil-progres span");
 
             progSkil.forEach((skil) => {
                 skil.style.width = skil.dataset.width;
             })
-
-            // let backToTop = document.createElement("div");
-            // backToTop.className = "back-top";
-            // document.body.appendChild(backToTop);
-        };
-
-        //// كود الزيرو
-        // if (windowScoll > (posation + hightSkils - windowHeight) - 150)  {
-        //     let progSkil = document.querySelectorAll(".skils .skil-progres span");
-
-        //     progSkil.forEach((skil) => {
-        //         skil.style.width = skil.dataset.width;
-        //     })
-
-        // };
-
-    }, 100);
+            document.querySelector(".top").classList.add("active");
+        }
+    if (windowScoll > (posation + hightSkils - windowHeight) - 700)  {
+            document.querySelector(".top").classList.add("active");
+        }else{
+            document.querySelector(".top").classList.remove("active");
+        }
 };
 
 
